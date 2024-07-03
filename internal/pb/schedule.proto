@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package schedule;
+
+option go_package = "./internal/pb";
+
+service Schedule {
+  rpc SetSchedule (SetScheduleRequest) returns (SetScheduleResponse) {}
+  rpc GetWeekScheduleByClass (GetWeekScheduleByClassRequest) returns (GetWeekScheduleByClassResponse) {}
+  rpc SetHomework (SetHomeworkRequest) returns (SetHomeworkResponse) {}
+  rpc SetWeeklySchedule (stream SetWeeklyScheduleRequest) returns (SetWeeklyScheduleResponse) {}
+}
+
+message Lesson {
+  string lesson_name = 1;
+  int64 classroom = 2;
+  string homework = 3;
+  int64 grade = 4;
+}
+
+message ScheduleDay {
+  repeated Lesson lessons = 1;
+  string date = 2;
+}
+
+message ScheduleWeek {
+  repeated ScheduleDay schedule_week = 1;
+}
+
+message SetScheduleRequest {
+  string class_name = 1;
+  ScheduleDay schedule_day = 2;
+}
+
+message SetScheduleResponse {
+  int64 status = 1;
+}
+
+message GetWeekScheduleByClassRequest {
+  string class_name = 1;
+}
+
+message GetWeekScheduleByClassResponse {
+  ScheduleWeek schedule = 1;
+}
+
+message SetHomeworkRequest {
+  string class_name = 1;
+  string date = 2;
+  string lesson_name = 3;
+  string homework = 4;
+}
+
+message SetHomeworkResponse {
+  int64 status = 1;
+}
+
+message SetWeeklyScheduleRequest {
+  bytes file_data = 1;
+  string filename = 2;
+  string sheet = 3;
+}
+
+message SetWeeklyScheduleResponse {
+  int64 status = 1;
+}
