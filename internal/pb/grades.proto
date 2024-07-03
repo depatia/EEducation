@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package grades;
+
+option go_package = "./internal/pb";
+
+service Grades {
+  rpc GetLessonGrades (GetLessonGradesRequest) returns (GetLessonGradesResponse) {}
+  rpc GetAllLessonsGradesByStudentID (GetAllLessonsGradesByStudentIDRequest) returns (GetAllLessonsGradesByStudentIDResponse) {}
+  rpc SetGrade (SetGradeRequest) returns (SetGradeResponse) {}
+  rpc SetTermGrade (SetTermGradeRequest) returns (SetTermGradeResponse) {}
+  rpc DeleteGrade (DeleteGradeRequest) returns (DeleteGradeResponse) {}
+  rpc ChangeGrade (ChangeGradeRequest) returns (ChangeGradeResponse) {}
+}
+
+message SetGradeRequest {
+  int64 student_id = 1;
+  string lesson_name = 2;
+  int64 grade = 3;
+  bool is_term = 4;
+}
+
+message SetGradeResponse {
+  int64 status = 1;
+}
+
+message Grade {
+  int64 student_id = 1;
+  string lesson_name = 2;
+  string date = 3;
+  int64 grade = 4;
+}
+
+message GetAllLessonsGradesByStudentIDRequest {
+  int64 student_id = 1;
+}
+
+message GetAllLessonsGradesByStudentIDResponse {
+  repeated Grade grades = 2;
+}
+
+message GetLessonGradesRequest {
+  int64 student_id = 1;
+  string lesson_name = 2;
+}
+
+message GetLessonGradesResponse {
+  repeated Grade grades = 2;
+}
+
+message SetTermGradeRequest {
+  int64 student_id = 1;
+  string lesson_name = 2;
+}
+
+message SetTermGradeResponse {
+  int64 status = 1;
+}
+
+message DeleteGradeRequest {
+  int64 student_id = 1;
+  string lesson_name = 2;
+  string date = 3;
+}
+
+message DeleteGradeResponse {
+  int64 status = 1;
+}
+
+message ChangeGradeRequest {
+  int64 student_id = 1;
+  string lesson_name = 2;
+  string date = 3;
+  int64 grade = 4;
+}
+
+message ChangeGradeResponse {
+  int64 status = 1;
+}
